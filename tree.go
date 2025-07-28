@@ -57,3 +57,32 @@ func isSymmetric(root *TreeNode) bool {
 	}
 	return check(root.Left, root.Right)
 }
+
+func levelOrder(root *TreeNode) [][]int {
+	if root == nil {
+		return nil
+	}
+	var res [][]int
+	var queue []*TreeNode
+	queue = append(queue, root)
+
+	for len(queue) > 0 {
+		var level []int
+		var nextQueue []*TreeNode
+
+		for _, node := range queue {
+			level = append(level, node.Val)
+			if node.Left != nil {
+				nextQueue = append(nextQueue, node.Left)
+			}
+			if node.Right != nil {
+				nextQueue = append(nextQueue, node.Right)
+			}
+		}
+
+		res = append(res, level)
+		queue = nextQueue
+	}
+
+	return res
+}

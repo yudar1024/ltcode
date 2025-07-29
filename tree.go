@@ -86,3 +86,48 @@ func levelOrder(root *TreeNode) [][]int {
 
 	return res
 }
+
+func sortedArrayToBST(nums []int) *TreeNode {
+	if len(nums) == 0 {
+		return nil
+	}
+	mid := len(nums) / 2
+	root := &TreeNode{Val: nums[mid]}
+	root.Left = sortedArrayToBST(nums[:mid])
+	root.Right = sortedArrayToBST(nums[mid+1:])
+	return root
+}
+
+func isValidBST(root *TreeNode) bool {
+	var check func(node *TreeNode, min, max *int) bool
+	check = func(node *TreeNode, min, max *int) bool {
+		if node == nil {
+			return true
+		}
+		if (min != nil && node.Val <= *min) || (max != nil && node.Val >= *max) {
+			return false
+		}
+		return check(node.Left, min, &node.Val) && check(node.Right, &node.Val, max)
+	}
+	return check(root, nil, nil)
+}
+
+func kthSmallest(root *TreeNode, k int) int {
+	var res int
+	var count int
+	var inorder func(node *TreeNode)
+	inorder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		inorder(node.Left)
+		count++
+		if count == k {
+			res = node.Val
+			return
+		}
+		inorder(node.Right)
+	}
+	inorder(root)
+	return res
+}

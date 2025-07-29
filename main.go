@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 )
@@ -125,4 +126,12 @@ func productExceptSelf(nums []int) []int {
 	}
 
 	return result
+}
+
+func main() {
+	// 测试
+	nums := []int{1, 2, 3, 4}
+	k := 2
+	rotate(nums, k)
+	fmt.Println(nums) // 输出: [3 4 1 2]
 }

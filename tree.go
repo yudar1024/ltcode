@@ -113,21 +113,17 @@ func isValidBST(root *TreeNode) bool {
 }
 
 func kthSmallest(root *TreeNode, k int) int {
-	var res int
-	var count int
-	var inorder func(node *TreeNode)
-	inorder = func(node *TreeNode) {
-		if node == nil {
-			return
+	stack := []*TreeNode{}
+	for {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
 		}
-		inorder(node.Left)
-		count++
-		if count == k {
-			res = node.Val
-			return
+		stack, root = stack[:len(stack)-1], stack[len(stack)-1]
+		k--
+		if k == 0 {
+			return root.Val
 		}
-		inorder(node.Right)
+		root = root.Right
 	}
-	inorder(root)
-	return res
 }

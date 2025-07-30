@@ -152,3 +152,38 @@ func rightSideView(root *TreeNode) []int {
 	}
 	return res
 }
+
+func searchInsert(nums []int, target int) int {
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			return mid
+		} else if nums[mid] < target {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+	return left
+}
+
+func searchMatrix(matrix [][]int, target int) bool {
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		return false
+	}
+	m, n := len(matrix), len(matrix[0])
+	left, right := 0, m*n-1
+	for left <= right {
+		mid := left + (right-left)/2
+		row, col := mid/n, mid%n
+		if matrix[row][col] == target {
+			return true
+		} else if matrix[row][col] < target {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+	return false
+}
